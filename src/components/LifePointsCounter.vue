@@ -2,8 +2,12 @@
   <div class="container">
     <div class="counter">{{ MainStore.lifepoints }}</div>
 
-    <button @click="MainStore.raise(1)" class="raise"></button>
-    <button @click="MainStore.reduce(1)" class="reduce"></button>
+    <button @click="MainStore.raise(1)" class="raise">
+      <PlusIcon />
+    </button>
+    <button @click="MainStore.reduce(1)" class="reduce">
+      <MinusIcon />
+    </button>
   </div>
 </template>
 
@@ -11,8 +15,15 @@
 import { defineComponent } from 'vue'
 import { useMainStore } from "../stores/mainStore";
 
+import PlusIcon from "../assets/svg/plus.svg"
+import MinusIcon from "../assets/svg/minus.svg"
+
 export default defineComponent({
   name: 'LifePointsCounter',
+  components: {
+    PlusIcon,
+    MinusIcon
+  },
   setup: () => {
     const MainStore = useMainStore()
 

@@ -9,6 +9,7 @@
   "dependencies": {
     "pinia": "^2.0.0-alpha.7",
     "reset-css": "^5.0.1",
+    "vite-svg-loader": "^1.4.2",
     "vue": "^3.0.5"
   },
   "devDependencies": {
