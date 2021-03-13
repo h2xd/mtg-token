@@ -2,10 +2,10 @@
   <div class="container">
     <div class="counter">{{ LifeStore.remainingLife }}</div>
 
-    <button @click="LifeStore.raise(1)" class="raise">
+    <button @click="LifeStore.raise(1)" class="button raise">
       <PlusIcon />
     </button>
-    <button @click="LifeStore.reduce(1)" class="reduce">
+    <button @click="LifeStore.reduce(1)" class="button reduce">
       <MinusIcon />
     </button>
   </div>
@@ -50,7 +50,7 @@ export default defineComponent({
   font-size: 50vw;
 }
 
-.raise, .reduce {
+.button {
   position: absolute;
   left: 0;
   width: 100%;
@@ -61,7 +61,13 @@ export default defineComponent({
   outline: 0;
 }
 
-.raise::before, .reduce::before {
+.button svg {
+  opacity: 0.6;
+  fill: var(--mana-color-red-text);
+  transition: all 200ms ease-in-out;
+}
+
+.button::before {
   content: '';
   position: absolute;
   top: 0;
@@ -69,6 +75,11 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+}
+
+.button:active svg {
+  transition: none;
+  transform: scale(0.7);
 }
 
 .raise {
