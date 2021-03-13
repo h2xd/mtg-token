@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <div class="counter">{{ MainStore.lifepoints }}</div>
+    <div class="counter">{{ LifeStore.remainingLife }}</div>
 
-    <button @click="MainStore.raise(1)" class="raise">
+    <button @click="LifeStore.raise(1)" class="raise">
       <PlusIcon />
     </button>
-    <button @click="MainStore.reduce(1)" class="reduce">
+    <button @click="LifeStore.reduce(1)" class="reduce">
       <MinusIcon />
     </button>
   </div>
@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useMainStore } from "../stores/mainStore";
+import { useLifeStore } from "../stores/lifeStore";
 
 import PlusIcon from "../assets/svg/plus.svg"
 import MinusIcon from "../assets/svg/minus.svg"
@@ -25,9 +25,9 @@ export default defineComponent({
     MinusIcon
   },
   setup: () => {
-    const MainStore = useMainStore()
+    const LifeStore = useLifeStore()
 
-    return { MainStore }
+    return { LifeStore }
   }
 })
 </script>
