@@ -4,7 +4,7 @@
       <div>{{ token.power }} / {{ token.toughness }} Sick?: {{ token.hasSummoningSickness }}</div>
     </div>
 
-    <button @click="killToken">Kill</button>
+    <button @click="BoardStore.removeToken(token)">Kill</button>
   </div>
 </template>
 

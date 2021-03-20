@@ -32,7 +32,7 @@ export default defineComponent({
       BoardStore.addToken(newToken)
     }
 
-    return { BoardStore, createToken }
+    return { BoardStore, createToken } 
   }
 })
 </script>
