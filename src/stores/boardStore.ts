@@ -1,8 +1,8 @@
-import { defineStore } from 'pinia'
-import { TokenCreature } from "../entities/TokenCreature";
+import { defineStore } from "pinia"
+import { TokenCreature } from "../entities/TokenCreature"
 
 export const useBoardStore = defineStore({
-  id: 'board',
+  id: "board",
   state: () => ({
     token: [] as TokenCreature[],
   }),
@@ -16,7 +16,7 @@ export const useBoardStore = defineStore({
       this.token = [...this.token, newToken]
     },
     removeToken(filterToken: TokenCreature) {
-      this.token = this.token.filter(token => token !== filterToken)
-    }
+      this.token = this.token.filter((token) => token !== filterToken)
+    },
   },
 })

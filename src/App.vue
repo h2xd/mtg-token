@@ -4,17 +4,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 
-import Board from './components/Board.vue'
-import LifePointsCounter from './components/LifePointsCounter.vue'
+import Board from "./components/Board.vue"
+import LifePointsCounter from "./components/LifePointsCounter.vue"
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   components: {
     Board,
-    LifePointsCounter
-  }
+    LifePointsCounter,
+  },
 })
 </script>
 

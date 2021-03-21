@@ -9,27 +9,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { TokenCreature } from "../../entities/TokenCreature";
-import { useBoardStore } from "../../stores/boardStore";
+import { defineComponent, PropType } from "vue"
+import { TokenCreature } from "../../entities/TokenCreature"
+import { useBoardStore } from "../../stores/boardStore"
 
 export default defineComponent({
-  name: 'TokenCardDetail',
+  name: "TokenCardDetail",
   props: {
-    token: Object as PropType<TokenCreature>
+    token: Object as PropType<TokenCreature>,
   },
   setup: () => {
     const BoardStore = useBoardStore()
 
     function killToken() {
-      console.log('killToken')
+      console.log("killToken")
     }
 
     return { BoardStore, killToken }
-  }
+  },
 })
 </script>
-
 
 <style scoped>
 .container {
@@ -48,7 +47,8 @@ export default defineComponent({
   font-size: 50vw;
 }
 
-.raise, .reduce {
+.raise,
+.reduce {
   position: absolute;
   left: 0;
   width: 100%;
@@ -59,8 +59,9 @@ export default defineComponent({
   outline: 0;
 }
 
-.raise::before, .reduce::before {
-  content: '';
+.raise::before,
+.reduce::before {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -81,4 +82,3 @@ export default defineComponent({
   bottom: 0;
 }
 </style>
-

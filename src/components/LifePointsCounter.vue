@@ -12,26 +12,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { useLifeStore } from "../stores/lifeStore";
+import { defineComponent } from "vue"
+import { useLifeStore } from "../stores/lifeStore"
 
 import PlusIcon from "../assets/svg/plus.svg"
 import MinusIcon from "../assets/svg/minus.svg"
 
 export default defineComponent({
-  name: 'LifePointsCounter',
+  name: "LifePointsCounter",
   components: {
     PlusIcon,
-    MinusIcon
+    MinusIcon,
   },
   setup: () => {
     const LifeStore = useLifeStore()
 
     return { LifeStore }
-  }
+  },
 })
 </script>
-
 
 <style scoped>
 .container {
@@ -68,7 +67,7 @@ export default defineComponent({
 }
 
 .button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -94,4 +93,3 @@ export default defineComponent({
   bottom: 0;
 }
 </style>
-

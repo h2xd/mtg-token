@@ -11,17 +11,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 
-import { useBoardStore } from "../stores/boardStore";
-import { TokenCreature } from "../entities/TokenCreature";
+import { useBoardStore } from "../stores/boardStore"
+import { TokenCreature } from "../entities/TokenCreature"
 
-import TokenCardDetail from '../components/token/TokenCardDetail.vue'
+import TokenCardDetail from "../components/token/TokenCardDetail.vue"
 
 export default defineComponent({
-  name: 'Board',
+  name: "Board",
   components: {
-    TokenCardDetail
+    TokenCardDetail,
   },
   setup: () => {
     const BoardStore = useBoardStore()
@@ -32,7 +32,7 @@ export default defineComponent({
       BoardStore.addToken(newToken)
     }
 
-    return { BoardStore, createToken } 
-  }
+    return { BoardStore, createToken }
+  },
 })
 </script>
