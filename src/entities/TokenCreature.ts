@@ -1,10 +1,4 @@
-enum ManaType {
-  RED = 'red',
-  BLUE = 'blue',
-  GREEN = 'green',
-  BLACK = 'black',
-  WHITE = 'white',
-}
+import {ManaType} from "../@types/magic";
 
 const DEFAULT_TOKEN_CREATURE_OPTIONS = {
   power: 1,
