@@ -31,7 +31,7 @@ export default defineComponent({
     TokenCardDetail,
   },
   props: {
-    board: Object as PropType<ReturnType<useBoardStore>>,
+    board: Object as PropType<ReturnType<typeof useBoardStore>>,
   },
   setup: (props) => {
     function createToken(power, toughness) {

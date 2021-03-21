@@ -25,7 +25,7 @@ export default defineComponent({
     MinusIcon,
   },
   props: {
-    life: Object as PropType<ReturnType<useLifeStore>>,
+    life: Object as PropType<ReturnType<typeof useLifeStore>>,
   },
 })
 </script>

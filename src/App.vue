@@ -11,6 +11,7 @@
 import { defineComponent } from "vue"
 
 import { usePlayerStore } from "./stores/playerStore"
+import { hydratePlayerStore } from "./utils/hydratePlayerStore"
 import Board from "./components/Board.vue"
 import LifePointsCounter from "./components/LifePointsCounter.vue"
 
@@ -24,6 +25,8 @@ export default defineComponent({
     const player1Store = usePlayerStore()
     const handleAttackAll = () => player1Store.board.attackWithAll()
     const handleNextTurn = () => player1Store.nextTurn()
+
+    hydratePlayerStore(player1Store)
 
     return { player1Store, handleAttackAll, handleNextTurn }
   },

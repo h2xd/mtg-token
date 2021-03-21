@@ -3,7 +3,8 @@ import { ManaType } from "../@types/magic"
 const DEFAULT_TOKEN_CREATURE_OPTIONS = {
   power: 1,
   toughness: 1,
-  tapped: false,
+  isTapped: false,
+  hasSummoningSickness: true,
   mana: [ManaType.RED],
 }
 
@@ -44,7 +45,8 @@ export class TokenCreature {
       ...options,
     }
 
-    this._tapped = this._options.tapped
+    this._tapped = this._options.isTapped
+    this._summoningSickness = this._options.hasSummoningSickness
     this.reset()
   }
 
