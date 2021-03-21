@@ -18,5 +18,8 @@ export const useBoardStore = defineStore({
     removeToken(filterToken: TokenCreature) {
       this.token = this.token.filter((token) => token !== filterToken)
     },
+    reset() {
+      this.token = []
+    },
   },
 })

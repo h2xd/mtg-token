@@ -1,6 +1,8 @@
 <template>
   <LifePointsCounter :life="player1Store.life" />
   <Board :board="player1Store.board" />
+
+  <button @click="player1Store.reset">Reset</button>
 </template>
 
 <script lang="ts">
