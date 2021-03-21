@@ -1,37 +1,34 @@
 <template>
   <div class="container">
-    <div class="counter">{{ LifeStore.remainingLife }}</div>
+    <div class="counter">{{ life.remainingLife }}</div>
 
-    <button @click="LifeStore.raise(1)" class="button raise">
+    <button @click="life.raise(1)" class="button raise">
       <PlusIcon />
     </button>
-    <button @click="LifeStore.reduce(1)" class="button reduce">
+    <button @click="life.reduce(1)" class="button reduce">
       <MinusIcon />
     </button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { useLifeStore } from "../stores/lifeStore";
+import { defineComponent, PropType } from "vue"
+import { useLifeStore } from "../stores/lifeStore"
 
 import PlusIcon from "../assets/svg/plus.svg"
 import MinusIcon from "../assets/svg/minus.svg"
 
 export default defineComponent({
-  name: 'LifePointsCounter',
+  name: "LifePointsCounter",
   components: {
     PlusIcon,
-    MinusIcon
+    MinusIcon,
   },
-  setup: () => {
-    const LifeStore = useLifeStore()
-
-    return { LifeStore }
-  }
+  props: {
+    life: Object as PropType<ReturnType<useLifeStore>>,
+  },
 })
 </script>
-
 
 <style scoped>
 .container {
@@ -68,7 +65,7 @@ export default defineComponent({
 }
 
 .button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -94,4 +91,3 @@ export default defineComponent({
   bottom: 0;
 }
 </style>
-

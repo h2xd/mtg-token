@@ -1,91 +1,57 @@
 <template>
+  <div>AttackPower: {{ board.attackPower }}</div>
   <div>
-    <div v-if="BoardStore.hasToken">
-      <div v-for="token in BoardStore.token">
-        <TokenCardDetail :token="token" />
-      </div>
-    </div>
+    <ol v-if="board.hasToken" class="board">
+      <TokenCardDetail
+        is="li"
+        v-for="(token, index) in board.token"
+        :key="index"
+        :token="token"
+        @death="handleDeath"
+        @copy="handleCopy"
+      />
+    </ol>
 
-    <button @click="createToken">Create 1/1 Token</button>
+    <button @click="createToken(1, 1)">Create 1/1 Token</button>
+    <button @click="createToken(2, 2)">Create 2/2 Token</button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from "vue"
 
-import { useBoardStore } from "../stores/boardStore";
-import { TokenCreature } from "../entities/TokenCreature";
+import { useBoardStore } from "../stores/boardStore"
+import { TokenCreature } from "../entities/TokenCreature"
 
-import TokenCardDetail from '../components/token/TokenCardDetail.vue'
+import TokenCardDetail from "../components/token/TokenCardDetail.vue"
 
 export default defineComponent({
-  name: 'Board',
+  name: "Board",
   components: {
-    TokenCardDetail
+    TokenCardDetail,
   },
-  setup: () => {
-    const BoardStore = useBoardStore()
+  props: {
+    board: Object as PropType<ReturnType<useBoardStore>>,
+  },
+  setup: (props) => {
+    function createToken(power, toughness) {
+      const newToken = new TokenCreature({ power, toughness })
 
-    function createToken() {
-      const newToken = new TokenCreature({ power: 1, toughness: 1 })
-
-      BoardStore.addToken(newToken)
+      props.board.addToken(newToken)
     }
 
-    return { BoardStore, createToken } 
-  }
+    const handleDeath = (token: TokenCreature) => props.board.removeToken(token)
+    const handleCopy = (token: TokenCreature) => props.board.copyToken(token)
+
+    return { createToken, handleDeath, handleCopy }
+  },
 })
 </script>
 
-
 <style scoped>
-.container {
+.board {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  background-color: var(--mana-color-red-backgrond);
-  color: var(--mana-color-red-text);
-  text-align: center;
-  width: 100%;
-  height: 100vw;
-}
-
-.counter {
-  font-size: 50vw;
-}
-
-.raise, .reduce {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 25%;
-
-  background-color: transparent;
-  border: 0;
-  outline: 0;
-}
-
-.raise::before, .reduce::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
-}
-
-.raise {
-  top: 0;
-}
-
-.raise::before {
-  transform: rotate(180deg);
-}
-
-.reduce {
-  bottom: 0;
+  flex-wrap: wrap;
+  list-style-type: none;
 }
 </style>
-

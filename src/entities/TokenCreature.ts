@@ -1,22 +1,16 @@
-enum ManaType {
-  RED = 'red',
-  BLUE = 'blue',
-  GREEN = 'green',
-  BLACK = 'black',
-  WHITE = 'white',
-}
+import { ManaType } from "../@types/magic"
 
 const DEFAULT_TOKEN_CREATURE_OPTIONS = {
   power: 1,
   toughness: 1,
   tapped: false,
-  mana: [ManaType.RED]
+  mana: [ManaType.RED],
 }
 
 export class TokenCreature {
   private _options!: typeof DEFAULT_TOKEN_CREATURE_OPTIONS
 
-  private _summoningSickness: boolean = true
+  private _summoningSickness = true
 
   private _tapped: boolean
 
@@ -24,33 +18,37 @@ export class TokenCreature {
 
   private _toughness!: number
 
-  get canAttack() {
+  get canAttack(): boolean {
     return !this._summoningSickness && !this._tapped
   }
 
-  get power() {
+  get power(): number {
     return this._power
   }
 
-  get toughness() {
+  get toughness(): number {
     return this._toughness
   }
 
-  get hasSummoningSickness() {
+  get isTapped(): boolean {
+    return this._tapped
+  }
+
+  get hasSummoningSickness(): boolean {
     return this._summoningSickness
   }
 
   constructor(options: Partial<typeof DEFAULT_TOKEN_CREATURE_OPTIONS>) {
     this._options = {
       ...DEFAULT_TOKEN_CREATURE_OPTIONS,
-      ...options
+      ...options,
     }
 
     this._tapped = this._options.tapped
     this.reset()
   }
 
-  public attack() {
+  public attack(): void {
     if (this._summoningSickness) {
       return
     }
@@ -58,12 +56,12 @@ export class TokenCreature {
     this._tapped = true
   }
 
-  public clear() {
+  public clear(): void {
     this._summoningSickness = false
     this._tapped = false
   }
 
-  private reset() {
+  private reset(): void {
     this._power = this._options.power
     this._toughness = this._options.toughness
   }
