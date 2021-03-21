@@ -4,8 +4,8 @@
     <ol v-if="board.hasToken" class="board">
       <TokenCardDetail
         is="li"
-        v-for="(token, index) in board.token"
-        :key="index"
+        v-for="token in board.token"
+        :key="token.uuid"
         :token="token"
         @death="handleDeath"
         @copy="handleCopy"

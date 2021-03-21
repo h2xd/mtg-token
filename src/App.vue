@@ -58,6 +58,16 @@ export default defineComponent({
   --transition: all 300ms ease-in-out;
 }
 
+@keyframes iconKeyFrames {
+  0% {
+    stroke-dashoffset: 70;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
