@@ -30,6 +30,10 @@ export class TokenCreature {
     return this._toughness
   }
 
+  get isTapped(): boolean {
+    return this._tapped
+  }
+
   get hasSummoningSickness(): boolean {
     return this._summoningSickness
   }

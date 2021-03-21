@@ -1,12 +1,19 @@
 <template>
+  <div>AttackPower: {{ board.attackPower }}</div>
   <div>
-    <div v-if="board.hasToken">
-      <div v-for="(token, index) in board.token" :key="index">
-        <TokenCardDetail :token="token" @death="handleDeath" />
-      </div>
-    </div>
+    <ol v-if="board.hasToken" class="board">
+      <TokenCardDetail
+        is="li"
+        v-for="(token, index) in board.token"
+        :key="index"
+        :token="token"
+        @death="handleDeath"
+        @copy="handleCopy"
+      />
+    </ol>
 
-    <button @click="createToken">Create 1/1 Token</button>
+    <button @click="createToken(1, 1)">Create 1/1 Token</button>
+    <button @click="createToken(2, 2)">Create 2/2 Token</button>
   </div>
 </template>
 
@@ -27,17 +34,24 @@ export default defineComponent({
     board: Object as PropType<ReturnType<useBoardStore>>,
   },
   setup: (props) => {
-    function createToken() {
-      const newToken = new TokenCreature({ power: 1, toughness: 1 })
+    function createToken(power, toughness) {
+      const newToken = new TokenCreature({ power, toughness })
 
       props.board.addToken(newToken)
     }
 
-    function handleDeath(token: TokenCreature) {
-      props.board.removeToken(token)
-    }
+    const handleDeath = (token: TokenCreature) => props.board.removeToken(token)
+    const handleCopy = (token: TokenCreature) => props.board.copyToken(token)
 
-    return { createToken, handleDeath }
+    return { createToken, handleDeath, handleCopy }
   },
 })
 </script>
+
+<style scoped>
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+}
+</style>

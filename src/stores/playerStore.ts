@@ -18,5 +18,8 @@ export const usePlayerStore = defineStore({
       this.life.reset()
       this.board.reset()
     },
+    nextTurn() {
+      this.board.nextTurn()
+    },
   },
 })
