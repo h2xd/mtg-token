@@ -1,11 +1,12 @@
 <template>
-  <LifePointsCounter />
-  <Board />
+  <LifePointsCounter :life="player1Store.life" />
+  <Board :board="player1Store.board" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
 
+import { usePlayerStore } from "./stores/playerStore"
 import Board from "./components/Board.vue"
 import LifePointsCounter from "./components/LifePointsCounter.vue"
 
@@ -14,6 +15,11 @@ export default defineComponent({
   components: {
     Board,
     LifePointsCounter,
+  },
+  setup() {
+    const player1Store = usePlayerStore()
+
+    return { player1Store }
   },
 })
 </script>

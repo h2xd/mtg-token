@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-if="BoardStore.hasToken">
-      <div v-for="token in BoardStore.token">
-        <TokenCardDetail :token="token" />
+    <div v-if="board.hasToken">
+      <div v-for="(token, index) in board.token" :key="index">
+        <TokenCardDetail :token="token" @death="handleDeath" />
       </div>
     </div>
 
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, PropType } from "vue"
 
 import { useBoardStore } from "../stores/boardStore"
 import { TokenCreature } from "../entities/TokenCreature"
@@ -23,16 +23,21 @@ export default defineComponent({
   components: {
     TokenCardDetail,
   },
-  setup: () => {
-    const BoardStore = useBoardStore()
-
+  props: {
+    board: Object as PropType<ReturnType<useBoardStore>>,
+  },
+  setup: (props) => {
     function createToken() {
       const newToken = new TokenCreature({ power: 1, toughness: 1 })
 
-      BoardStore.addToken(newToken)
+      props.board.addToken(newToken)
     }
 
-    return { BoardStore, createToken }
+    function handleDeath(token: TokenCreature) {
+      props.board.removeToken(token)
+    }
+
+    return { createToken, handleDeath }
   },
 })
 </script>

@@ -3,7 +3,7 @@ import { defineStore } from "pinia"
 const DEFAULT_LIFEPOINTS = 20
 
 export const useLifeStore = defineStore({
-  id: "main",
+  id: "life",
   state: () => ({
     remainingLife: DEFAULT_LIFEPOINTS,
   }),
