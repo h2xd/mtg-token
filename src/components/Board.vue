@@ -4,16 +4,16 @@
     <ol v-if="board.hasToken" class="board">
       <TokenCardDetail
         is="li"
-        v-for="(token, index) in board.token"
-        :key="index"
+        v-for="token in board.token"
+        :key="token.uuid"
         :token="token"
         @death="handleDeath"
         @copy="handleCopy"
       />
     </ol>
 
-    <button @click="createToken(1, 1)">Create 1/1 Token</button>
-    <button @click="createToken(2, 2)">Create 2/2 Token</button>
+    <Button @click="createToken(1, 1)">Create 1/1 Token</Button>
+    <Button @click="createToken(2, 2)">Create 2/2 Token</Button>
   </div>
 </template>
 
@@ -23,11 +23,13 @@ import { defineComponent, PropType } from "vue"
 import { useBoardStore } from "../stores/boardStore"
 import { TokenCreature } from "../entities/TokenCreature"
 
+import Button from "../components/base/Button.vue"
 import TokenCardDetail from "../components/token/TokenCardDetail.vue"
 
 export default defineComponent({
   name: "Board",
   components: {
+    Button,
     TokenCardDetail,
   },
   props: {

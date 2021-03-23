@@ -1,4 +1,5 @@
 import { ManaType } from "../@types/magic"
+import { uuidv4 } from "../utils/uuidv4"
 
 const DEFAULT_TOKEN_CREATURE_OPTIONS = {
   power: 1,
@@ -18,6 +19,8 @@ export class TokenCreature {
   private _power!: number
 
   private _toughness!: number
+
+  public readonly uuid: string
 
   get canAttack(): boolean {
     return !this._summoningSickness && !this._tapped
@@ -47,6 +50,7 @@ export class TokenCreature {
 
     this._tapped = this._options.isTapped
     this._summoningSickness = this._options.hasSummoningSickness
+    this.uuid = uuidv4()
     this.reset()
   }
 
