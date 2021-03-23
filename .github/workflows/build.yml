@@ -21,7 +21,11 @@ jobs:
           from_branch: main
           target_branch: gh-pages
           github_token: ${{ github.token }}
-      
+          
+      - uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+
       - uses: actions/setup-node@v2
         with:
           node-version: '12.x'
@@ -29,6 +33,7 @@ jobs:
       - run: yarn install
       - run: yarn build
       - run: |
+          rm .gitignore
           date > generated.txt
           git config user.name github-actions
           git config user.email github-actions@github.com
