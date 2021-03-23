@@ -44,6 +44,7 @@ export default defineComponent({
   border-radius: var(--border-radius);
   margin: var(--space-m);
   transition: var(--transition);
+  box-shadow: var(--box-shadow-token);
 }
 
 .tapped {

@@ -1,16 +1,8 @@
-import { ManaType } from "../@types/magic"
 import { uuidv4 } from "../utils/uuidv4"
-
-const DEFAULT_TOKEN_CREATURE_OPTIONS = {
-  power: 1,
-  toughness: 1,
-  isTapped: false,
-  hasSummoningSickness: true,
-  mana: [ManaType.RED],
-}
+import { DEFAULT_TOKEN_CREATURE_OPTIONS, TokenCreatureOptions } from "../@types/token"
 
 export class TokenCreature {
-  private _options!: typeof DEFAULT_TOKEN_CREATURE_OPTIONS
+  private _options!: TokenCreatureOptions
 
   private _summoningSickness = true
 
@@ -42,7 +34,7 @@ export class TokenCreature {
     return this._summoningSickness
   }
 
-  constructor(options: Partial<typeof DEFAULT_TOKEN_CREATURE_OPTIONS>) {
+  constructor(options: Partial<TokenCreatureOptions>) {
     this._options = {
       ...DEFAULT_TOKEN_CREATURE_OPTIONS,
       ...options,

@@ -6,7 +6,7 @@
 
 <style scoped>
 .button {
-  padding: var(--space-m) var(--space-l);
+  padding: var(--space-xs) var(--space-m);
   background-color: var(--accent-color-background);
   border: 0;
   border-radius: var(--border-radius);
