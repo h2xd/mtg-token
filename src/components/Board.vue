@@ -11,9 +11,6 @@
         @copy="handleCopy"
       />
     </ol>
-
-    <Button @click="createToken(1, 1)">Create 1/1 Token</Button>
-    <Button @click="createToken(2, 2)">Create 2/2 Token</Button>
   </div>
 </template>
 
@@ -23,29 +20,21 @@ import { defineComponent, PropType } from "vue"
 import { useBoardStore } from "../stores/boardStore"
 import { TokenCreature } from "../entities/TokenCreature"
 
-import Button from "../components/base/Button.vue"
 import TokenCardDetail from "../components/token/TokenCardDetail.vue"
 
 export default defineComponent({
   name: "Board",
   components: {
-    Button,
     TokenCardDetail,
   },
   props: {
     board: Object as PropType<ReturnType<typeof useBoardStore>>,
   },
   setup: (props) => {
-    function createToken(power, toughness) {
-      const newToken = new TokenCreature({ power, toughness })
-
-      props.board.addToken(newToken)
-    }
-
     const handleDeath = (token: TokenCreature) => props.board.removeToken(token)
     const handleCopy = (token: TokenCreature) => props.board.copyToken(token)
 
-    return { createToken, handleDeath, handleCopy }
+    return { handleDeath, handleCopy }
   },
 })
 </script>

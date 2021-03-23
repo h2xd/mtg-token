@@ -5,22 +5,29 @@
   <Button @click="player1Store.reset">Reset</Button>
   <Button @click="handleAttackAll">Attack with all</Button>
   <Button @click="handleNextTurn">Next Turn</Button>
+
+  <Library @summon="handleSummon" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
 
+import { LibraryEntry } from "./@types/library"
 import { usePlayerStore } from "./stores/playerStore"
 import { hydratePlayerStore } from "./utils/hydratePlayerStore"
+
 import Board from "./components/Board.vue"
 import Button from "./components/base/Button.vue"
+import Library from "./components/Library.vue"
 import LifePointsCounter from "./components/LifePointsCounter.vue"
+import { TokenCreature } from "./entities/TokenCreature"
 
 export default defineComponent({
   name: "App",
   components: {
     Board,
     Button,
+    Library,
     LifePointsCounter,
   },
   setup() {
@@ -30,7 +37,15 @@ export default defineComponent({
 
     hydratePlayerStore(player1Store)
 
-    return { player1Store, handleAttackAll, handleNextTurn }
+    const handleSummon = (entry: LibraryEntry) => {
+      const newToken = new TokenCreature({
+        ...entry.tokenOptions,
+      })
+
+      player1Store.board.addToken(newToken)
+    }
+
+    return { player1Store, handleAttackAll, handleNextTurn, handleSummon }
   },
 })
 </script>
@@ -40,15 +55,25 @@ export default defineComponent({
   /* Main-Colors */
   --accent-color-background: #6014d7;
   --accent-color-text: #ffffff;
+  --color-background: #030108;
+  --color-text: #ffffff;
 
   /* Mana-Colors */
   --mana-color-red-backgrond: #f51b07;
   --mana-color-red-text: #350600;
 
+  /* Box-Shadow */
+  --box-shadow-overlay: 0 -0.8rem 1rem -0.05rem var(--accent-color-background);
+  --box-shadow-token: 0 0 1rem -0.2rem var(--accent-color-background);
+
+  /* Font-Size */
+  --font-size-l: 1.2rem;
+
   /* Spacing */
-  --space-s: 0.3rem;
-  --space-m: 0.5rem;
-  --space-l: 0.5rem;
+  --space-xs: 0.3rem;
+  --space-s: 0.5rem;
+  --space-m: 1rem;
+  --space-l: 1.2rem;
 
   /* Border */
   --border-width: 0.15rem;
@@ -56,6 +81,15 @@ export default defineComponent({
 
   /* Transitions */
   --transition: all 300ms ease-in-out;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 #app {
