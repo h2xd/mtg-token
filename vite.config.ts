@@ -1,9 +1,17 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from "vite"
+import vue from "@vitejs/plugin-vue"
 
-import svgLoader from 'vite-svg-loader'
+import svgLoader from "vite-svg-loader"
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue(), svgLoader()]
-})
+export default ({ command, mode }) => {
+  if (command === "serve") {
+    return defineConfig({
+      plugins: [vue()],
+    })
+  } else {
+    return defineConfig({
+      base: "https://h2xd.github.io/mtg-token/",
+      plugins: [vue()],
+    })
+  }
+}
