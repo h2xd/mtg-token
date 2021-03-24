@@ -6,11 +6,19 @@
   <Button @click="handleAttackAll">Attack with all</Button>
   <Button @click="handleNextTurn">Next Turn</Button>
 
+  <div>
+    <button @click="rtc.open(player1Store.uuid)" v-if="!rtc.hasPeer">Open Peer</button>
+    <div v-else>Peer-UUID: {{ player1Store.uuid }}</div>
+
+    <input v-model="connection" />
+    <button @click="handleConnect">Connect</button>
+  </div>
+
   <Library @summon="handleSummon" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, ref } from "vue"
 
 import { LibraryEntry } from "./@types/library"
 import { usePlayerStore } from "./stores/playerStore"
@@ -21,6 +29,7 @@ import Button from "./components/base/Button.vue"
 import Library from "./components/Library.vue"
 import LifePointsCounter from "./components/LifePointsCounter.vue"
 import { TokenCreature } from "./entities/TokenCreature"
+import { useRtc } from "./stores/rtcStore"
 
 export default defineComponent({
   name: "App",
@@ -32,8 +41,12 @@ export default defineComponent({
   },
   setup() {
     const player1Store = usePlayerStore()
+    const rtc = useRtc()
+
     const handleAttackAll = () => player1Store.board.attackWithAll()
     const handleNextTurn = () => player1Store.nextTurn()
+
+    const connection = ref("")
 
     hydratePlayerStore(player1Store)
 
@@ -45,7 +58,11 @@ export default defineComponent({
       player1Store.board.addToken(newToken)
     }
 
-    return { player1Store, handleAttackAll, handleNextTurn, handleSummon }
+    const handleConnect = () => {
+      rtc.connect(connection.value)
+    }
+
+    return { player1Store, handleAttackAll, handleNextTurn, handleSummon, connection, rtc, handleConnect }
   },
 })
 </script>

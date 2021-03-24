@@ -44,7 +44,7 @@ export default defineComponent({
 <style scoped>
 .library {
   position: fixed;
-  top: 80%;
+  top: 100%;
   left: 0;
   width: 100%;
   height: 70%;
