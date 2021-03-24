@@ -1,12 +1,14 @@
 import { defineStore } from "pinia"
 import { useLifeStore } from "./lifeStore"
 import { useBoardStore } from "./boardStore"
+import { ManaType } from "../@types/mana"
 
 export const usePlayerStore = defineStore({
-  id: "main",
+  id: "player",
   state: () => ({
     life: useLifeStore(),
     board: useBoardStore(),
+    mana: ManaType.WHITE,
   }),
   getters: {
     alive() {
@@ -14,6 +16,9 @@ export const usePlayerStore = defineStore({
     },
   },
   actions: {
+    setManaType(mana: ManaType) {
+      this.mana = mana
+    },
     reset() {
       this.life.reset()
       this.board.reset()

@@ -1,22 +1,29 @@
 <template>
-  <div class="container">
-    <div class="counter">{{ life.remainingLife }}</div>
+  <div class="container" :style="styles">
+    <div class="counter">{{ player.life.remainingLife }}</div>
 
-    <button @click="life.raise(1)" class="button raise">
+    <button @click="player.life.raise(1)" class="button raise">
       <PlusIcon />
     </button>
-    <button @click="life.reduce(1)" class="button reduce">
+    <button @click="player.life.reduce(1)" class="button reduce">
       <MinusIcon />
     </button>
   </div>
+  <button @click="player.setManaType(mana.BLACK)">Black</button>
+  <button @click="player.setManaType(mana.RED)">Red</button>
+  <button @click="player.setManaType(mana.GREEN)">Green</button>
+  <button @click="player.setManaType(mana.WHITE)">White</button>
+  <button @click="player.setManaType(mana.BLUE)">Blue</button>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue"
-import { useLifeStore } from "../stores/lifeStore"
+import { defineComponent, PropType, computed } from "vue"
+import { usePlayerStore } from "../stores/playerStore"
 
 import PlusIcon from "../assets/svg/plus.svg"
 import MinusIcon from "../assets/svg/minus.svg"
+import { manaToCustomProperties } from "../utils/manaToCustomProperties"
+import { ManaType } from "../@types/mana"
 
 export default defineComponent({
   name: "LifePointsCounter",
@@ -25,7 +32,16 @@ export default defineComponent({
     MinusIcon,
   },
   props: {
-    life: Object as PropType<ReturnType<typeof useLifeStore>>,
+    player: Object as PropType<ReturnType<typeof usePlayerStore>>,
+  },
+  setup(props) {
+    const styles = computed(() =>
+      manaToCustomProperties(props.player.mana, { backgroundKey: "--mana-background", textKey: "--mana-text" })
+    )
+
+    const mana = ManaType
+
+    return { styles, mana }
   },
 })
 </script>
@@ -36,8 +52,8 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   position: relative;
-  background-color: var(--mana-color-red-backgrond);
-  color: var(--mana-color-red-text);
+  background-color: var(--mana-background);
+  color: var(--mana-text);
   text-align: center;
   width: 100%;
   height: 100vw;
@@ -59,8 +75,8 @@ export default defineComponent({
 }
 
 .button svg {
-  opacity: 0.6;
-  fill: var(--mana-color-red-text);
+  opacity: 0.9;
+  stroke: var(--mana-text);
   transition: all 200ms ease-in-out;
 }
 
