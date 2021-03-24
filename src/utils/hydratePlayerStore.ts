@@ -8,6 +8,8 @@ export function hydratePlayerStore(store: ReturnType<typeof usePlayerStore>): vo
       JSON.stringify({
         board: state.board.$state,
         life: state.life.$state,
+        uuid: state.uuid,
+        name: state.name,
       })
     )
   })
@@ -30,6 +32,8 @@ export function hydratePlayerStore(store: ReturnType<typeof usePlayerStore>): vo
           }),
         },
         life: hydratedData.life,
+        uuid: hydratedData.uuid,
+        name: hydratedData.name,
       })
     }
   } catch (error) {
