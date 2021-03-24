@@ -7,10 +7,10 @@
 <style scoped>
 .button {
   padding: var(--space-xs) var(--space-m);
-  background-color: var(--accent-color-background);
+  background-color: var(--color-accent);
   border: 0;
   border-radius: var(--border-radius);
-  color: var(--accent-color-text);
+  color: var(--color-text);
   font-weight: bold;
   cursor: pointer;
   outline: 0;
