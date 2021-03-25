@@ -1,5 +1,5 @@
 <template>
-  <div :class="['library', Library.isActive && 'active']">
+  <div class="library">
     <Headline>
       Library
       <template #icon>
@@ -43,20 +43,11 @@ export default defineComponent({
 
 <style scoped>
 .library {
-  position: fixed;
-  top: 80%;
-  left: 0;
-  width: 100%;
-  height: 70%;
   padding: var(--space-l);
   transition: var(--transition);
   background-color: var(--color-background);
   color: var(--color-text);
   box-shadow: var(--box-shadow-overlay);
   text-align: left;
-}
-
-.active {
-  top: 30%;
 }
 </style>

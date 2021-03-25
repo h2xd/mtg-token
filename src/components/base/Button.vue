@@ -1,10 +1,10 @@
 <template>
-  <button class="button">
+  <button :class="$style.button">
     <slot />
   </button>
 </template>
 
-<style scoped>
+<style module>
 .button {
   padding: var(--space-xs) var(--space-m);
   background-color: var(--color-accent);
