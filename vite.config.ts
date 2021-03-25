@@ -1,17 +1,19 @@
-import { defineConfig } from "vite"
+import { defineConfig, UserConfigExport } from "vite"
 import vue from "@vitejs/plugin-vue"
 
 import svgLoader from "vite-svg-loader"
 
-export default ({ command, mode }) => {
+const plugins = [vue(), svgLoader()]
+
+export default ({ command }: { command: string }): UserConfigExport => {
   if (command === "serve") {
     return defineConfig({
-      plugins: [vue(), svgLoader()],
-    })
-  } else {
-    return defineConfig({
-      base: "https://h2xd.github.io/mtg-token/",
-      plugins: [vue(), svgLoader()],
+      plugins,
     })
   }
+
+  return defineConfig({
+    base: "https://h2xd.github.io/mtg-token/",
+    plugins,
+  })
 }
