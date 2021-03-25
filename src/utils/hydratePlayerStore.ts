@@ -1,5 +1,6 @@
 import { usePlayerStore } from "../stores/playerStore"
 import { TokenCreature } from "../entities/TokenCreature"
+import { TokenCreatureOptions } from "../@types/token"
 
 export function hydratePlayerStore(store: ReturnType<typeof usePlayerStore>): void {
   store.$subscribe((_, state) => {
@@ -22,13 +23,15 @@ export function hydratePlayerStore(store: ReturnType<typeof usePlayerStore>): vo
       store.$patch({
         board: {
           ...hydratedData.board,
-          token: hydratedData.board.token.map((hydratedTokenData: any) => {
-            return new TokenCreature({
-              ...hydratedTokenData._options,
-              hasSummoningSickness: hydratedTokenData._summoningSickness,
-              isTapped: hydratedTokenData._tapped,
-            })
-          }),
+          token: hydratedData.board.token.map(
+            (hydratedTokenData: { _options: TokenCreatureOptions; _summoningSickness: boolean; _tapped: boolean }) => {
+              return new TokenCreature({
+                ...hydratedTokenData._options,
+                hasSummoningSickness: hydratedTokenData._summoningSickness,
+                isTapped: hydratedTokenData._tapped,
+              })
+            }
+          ),
         },
         life: hydratedData.life,
         mana: hydratedData.mana,
