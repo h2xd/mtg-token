@@ -1,6 +1,6 @@
 <template>
   <div class="container" :style="styles">
-    <div class="counter">{{ player.life.remainingLife }}</div>
+    <div class="counter" @click="popupStore.open()">{{ player.life.remainingLife }}</div>
 
     <button @click="player.life.raise(1)" class="button raise">
       <PlusIcon />
@@ -9,39 +9,64 @@
       <MinusIcon />
     </button>
   </div>
-  <button @click="player.setManaType(mana.BLACK)">Black</button>
-  <button @click="player.setManaType(mana.RED)">Red</button>
-  <button @click="player.setManaType(mana.GREEN)">Green</button>
-  <button @click="player.setManaType(mana.WHITE)">White</button>
-  <button @click="player.setManaType(mana.BLUE)">Blue</button>
+
+  <Popup>
+    <button
+      v-for="item in manaCollection"
+      :key="item.mana"
+      :class="['manaButton', item.selected && 'selected']"
+      :style="item.styles"
+      @click="player.setManaType(item.mana)"
+    ></button>
+
+    <div>
+      <Button @click="player.reset()">Reset Game</Button>
+    </div>
+  </Popup>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from "vue"
 import { usePlayerStore } from "../stores/playerStore"
 
+import { ManaType } from "../@types/mana"
+import { manaToCustomProperties } from "../utils/manaToCustomProperties"
+import { usePopupStore } from "../stores/popupStore"
+import Popup from "./Popup.vue"
+
 import PlusIcon from "../assets/svg/plus.svg"
 import MinusIcon from "../assets/svg/minus.svg"
-import { manaToCustomProperties } from "../utils/manaToCustomProperties"
-import { ManaType } from "../@types/mana"
+import Button from "./base/Button.vue"
 
 export default defineComponent({
   name: "LifePointsCounter",
   components: {
+    Button,
     PlusIcon,
     MinusIcon,
+    Popup,
   },
   props: {
     player: Object as PropType<ReturnType<typeof usePlayerStore>>,
   },
   setup(props) {
-    const styles = computed(() =>
-      manaToCustomProperties(props.player.mana, { backgroundKey: "--mana-background", textKey: "--mana-text" })
+    const manaPops = {
+      backgroundKey: "--mana-background",
+      textKey: "--mana-text",
+    }
+
+    const styles = computed(() => manaToCustomProperties(props.player.mana, manaPops))
+    const manaCollection = computed(() =>
+      Object.values(ManaType).map((mana) => ({
+        mana,
+        selected: props.player.mana === mana,
+        styles: manaToCustomProperties(mana, manaPops),
+      }))
     )
 
-    const mana = ManaType
+    const popupStore = usePopupStore()
 
-    return { styles, mana }
+    return { styles, popupStore, manaCollection }
   },
 })
 </script>
@@ -57,6 +82,21 @@ export default defineComponent({
   text-align: center;
   width: 100%;
   height: 100vw;
+}
+
+.manaButton {
+  background-color: var(--mana-background);
+  width: 1.3rem;
+  height: 1.3rem;
+  border: var(--mana-text);
+  outline: 0;
+  border-radius: 50%;
+  transform: var(--scale-zoomout);
+  transition: var(--transition);
+}
+
+.manaButton.selected {
+  transform: var(--scale-default);
 }
 
 .counter {

@@ -1,12 +1,13 @@
 <template>
-  <LifePointsCounter :player="player1" />
-  <Board :board="player1.board" />
+  <div :class="['app-container', popupStore.isOpen && 'scale']">
+    <LifePointsCounter :player="player1" />
+    <Board :board="player1.board" />
 
-  <Button @click="appStore.reset">Reset</Button>
-  <Button @click="handleAttackAll">Attack with all</Button>
-  <Button @click="handleNextTurn">Next Turn</Button>
+    <Button @click="handleAttackAll">Attack with all</Button>
+    <Button @click="handleNextTurn">Next Turn</Button>
 
-  <Library @summon="handleSummon" />
+    <Library @summon="handleSummon" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -15,12 +16,13 @@ import { defineComponent } from "vue"
 import { LibraryEntry } from "./@types/library"
 import { useAppStore } from "./stores/appStore"
 import { TokenCreature } from "./entities/TokenCreature"
-import { hydratePlayerStore } from "./utils/hydratePlayerStore"
 
+import { hydratePlayerStore } from "./utils/hydratePlayerStore"
 import Board from "./components/Board.vue"
 import Button from "./components/base/Button.vue"
 import Library from "./components/Library.vue"
 import LifePointsCounter from "./components/LifePointsCounter.vue"
+import { usePopupStore } from "./stores/popupStore"
 
 export default defineComponent({
   name: "App",
@@ -46,7 +48,9 @@ export default defineComponent({
       player1.board.addToken(newToken)
     }
 
-    return { player1, appStore, handleAttackAll, handleNextTurn, handleSummon }
+    const popupStore = usePopupStore()
+
+    return { player1, appStore, popupStore, handleAttackAll, handleNextTurn, handleSummon }
   },
 })
 </script>
@@ -72,8 +76,12 @@ export default defineComponent({
   --mana-color-green-text: #0d4c02;
 
   /* Box-Shadow */
-  --box-shadow-overlay: 0 -0.8rem 1rem -0.05rem var(--color-shadow);
+  --box-shadow-overlay: 0 0rem 1rem -0.05rem var(--color-shadow);
   --box-shadow-token: 0 0 1rem -0.2rem var(--color-shadow);
+
+  /* Scaling */
+  --scale-default: scale3d(1, 1, 1);
+  --scale-zoomout: scale3d(0.8, 0.8, 0.8);
 
   /* Font-Size */
   --font-size-l: 1.2rem;
@@ -95,16 +103,26 @@ export default defineComponent({
 body {
   background-color: var(--color-background);
   color: var(--color-text);
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
   box-sizing: border-box;
 }
 
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+.app-container {
+  transition: var(--transition);
+  z-index: 10;
+  transform: var(--scale-default);
+}
+
+.scale {
+  position: relative;
+  transform: var(--scale-zoomout);
+  filter: blur(10px);
+  z-index: 0;
+  opacity: 0.8;
 }
 </style>
