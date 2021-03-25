@@ -5,6 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
+    "lint": "lint:js",
     "lint:js": "eslint --cache --max-warnings 0 --ext .js,.vue,.ts .",
     "lint:js:fix": "eslint --cache --fix --max-warnings 0 --ext .js,.vue,.ts ."
   },
