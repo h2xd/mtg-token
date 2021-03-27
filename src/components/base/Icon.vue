@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
-    <span class="base underlay">
+  <div :class="$style.container">
+    <span :class="[$style.base, $style.underlay]">
       <slot name="default" />
     </span>
-    <span :class="['base', 'overlayed', active && 'active']">
+    <span :class="[$style.base, $style.overlayed, active && $style.active]">
       <slot name="default" />
     </span>
   </div>
@@ -22,7 +22,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style module>
 .container {
   position: relative;
 }
