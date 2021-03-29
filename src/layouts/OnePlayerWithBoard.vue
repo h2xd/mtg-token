@@ -42,7 +42,7 @@ export default defineComponent({
       player1.board.addToken(newToken)
     }
 
-    return { player1, appStore, handleAttackAll, handleNextTurn, handleSummon }
+    return { player1, handleAttackAll, handleNextTurn, handleSummon }
   },
 })
 </script>
