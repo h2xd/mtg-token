@@ -20,23 +20,30 @@
     ></button>
 
     <div>
-      <Button @click="player.reset()">Reset Game</Button>
+      <Button @click="appStore.reset()">Reset Game</Button>
+    </div>
+
+    <div>
+      <Button v-for="layout in appStore.layouts" :key="layout.name" @click="handleLayoutChange(layout)">
+        {{ layout.name }}
+      </Button>
     </div>
   </Popup>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from "vue"
-import { usePlayerStore } from "../stores/playerStore"
+import { createPlayerStore } from "../stores/playerStore"
 
 import { ManaType } from "../@types/mana"
 import { manaToCustomProperties } from "../utils/manaToCustomProperties"
 import { usePopupStore } from "../stores/popupStore"
-import Popup from "./Popup.vue"
+import { AppLayout, useAppStore } from "../stores/appStore"
 
+import Button from "./base/Button.vue"
+import Popup from "./Popup.vue"
 import PlusIcon from "../assets/svg/plus.svg"
 import MinusIcon from "../assets/svg/minus.svg"
-import Button from "./base/Button.vue"
 
 export default defineComponent({
   name: "LifePointsCounter",
@@ -47,9 +54,11 @@ export default defineComponent({
     Popup,
   },
   props: {
-    player: Object as PropType<ReturnType<typeof usePlayerStore>>,
+    player: Object as PropType<ReturnType<typeof createPlayerStore>>,
   },
   setup(props) {
+    const appStore = useAppStore()
+
     const styles = computed(() => manaToCustomProperties(props.player.mana))
     const manaCollection = computed(() =>
       Object.values(ManaType).map((mana) => ({
@@ -61,7 +70,12 @@ export default defineComponent({
 
     const popupStore = usePopupStore()
 
-    return { styles, popupStore, manaCollection }
+    const handleLayoutChange = (layout: AppLayout) => {
+      appStore.setLayout(layout)
+      popupStore.close()
+    }
+
+    return { styles, appStore, popupStore, manaCollection, handleLayoutChange }
   },
 })
 </script>
