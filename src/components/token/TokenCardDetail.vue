@@ -1,5 +1,5 @@
 <template>
-  <component :is="is" :class="['card', token.isTapped && 'tapped']" v-if="token">
+  <component :is="is" :class="['card', token.isTapped && 'tapped']" :style="manaStyles" v-if="token">
     <div>{{ token.power }} / {{ token.toughness }}</div>
 
     <div>
@@ -7,18 +7,19 @@
       <Icon :active="token.hasSummoningSickness"><MoonIcon /></Icon>
     </div>
 
-    <!--    <button @click="$emit('death', token)">Kill</button>-->
-    <!--    <button @click="$emit('copy', token)">Clone</button>-->
+    <button @click="$emit('death', token)">Kill</button>
+    <button @click="$emit('copy', token)">Clone</button>
   </component>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue"
+import { computed, defineComponent, PropType } from "vue"
 import { TokenCreature } from "../../entities/TokenCreature"
 
 import Icon from "../base/Icon.vue"
 import CornerDownLeftIcon from "../../assets/svg/corner-down-left.svg"
 import MoonIcon from "../../assets/svg/moon.svg"
+import { manaToCustomProperties } from "../../utils/manaToCustomProperties"
 
 export default defineComponent({
   name: "TokenCardDetail",
@@ -34,6 +35,14 @@ export default defineComponent({
       default: "li",
     },
   },
+  setup(props) {
+    console.log(props.token)
+
+    const manaStyles = computed(() => manaToCustomProperties(props.token.mana[0]))
+    console.log(manaStyles)
+
+    return { manaStyles }
+  },
 })
 </script>
 
@@ -45,6 +54,8 @@ export default defineComponent({
   margin: var(--space-m);
   transition: var(--transition);
   box-shadow: var(--box-shadow-token);
+  background-color: var(--mana-background);
+  color: var(--mana-text);
 }
 
 .tapped {

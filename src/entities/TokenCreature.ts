@@ -1,5 +1,6 @@
 import { uuidv4 } from "../utils/uuidv4"
 import { DEFAULT_TOKEN_CREATURE_OPTIONS, TokenCreatureOptions } from "../@types/token"
+import { ManaType } from "../@types/mana"
 
 export class TokenCreature {
   private _options!: TokenCreatureOptions
@@ -24,6 +25,10 @@ export class TokenCreature {
 
   get toughness(): number {
     return this._toughness
+  }
+
+  get mana(): ManaType[] {
+    return this._options.mana
   }
 
   get isTapped(): boolean {

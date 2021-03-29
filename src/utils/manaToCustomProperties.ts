@@ -8,7 +8,7 @@ function extractText(mana: ManaType): string {
   return `var(--mana-color-${mana}-text)`
 }
 
-const DEFAULT_PROPERTY_NAMES = {
+export const DEFAULT_PROPERTY_NAMES = {
   backgroundKey: "--mana-background",
   textKey: "--mana-text",
 }
