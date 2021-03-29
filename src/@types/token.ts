@@ -6,7 +6,7 @@ export const DEFAULT_TOKEN_CREATURE_OPTIONS = {
   toughness: 1,
   isTapped: false,
   hasSummoningSickness: true,
-  mana: [ManaType.RED],
+  mana: [ManaType.RED] as ManaType[],
   attributes: [] as Attribute[],
 }
 

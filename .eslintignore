@@ -1,4 +1,4 @@
 .github
 .eslintrc.js
 
-src/shims-vue.d.ts
+src/@types/shims-vue.d.ts

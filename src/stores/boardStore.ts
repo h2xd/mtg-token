@@ -25,7 +25,10 @@ export const useBoardStore = defineStore({
       this.token = this.token.filter((token) => token !== filterToken)
     },
     copyToken(token: TokenCreature) {
-      this.token = [...this.token, new TokenCreature({ power: token.power, toughness: token.toughness })]
+      this.token = [
+        ...this.token,
+        new TokenCreature({ power: token.power, toughness: token.toughness, mana: token.mana }),
+      ]
     },
     attackWithAll() {
       this.token.forEach((token) => token.attack())

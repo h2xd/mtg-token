@@ -50,17 +50,12 @@ export default defineComponent({
     player: Object as PropType<ReturnType<typeof usePlayerStore>>,
   },
   setup(props) {
-    const manaPops = {
-      backgroundKey: "--mana-background",
-      textKey: "--mana-text",
-    }
-
-    const styles = computed(() => manaToCustomProperties(props.player.mana, manaPops))
+    const styles = computed(() => manaToCustomProperties(props.player.mana))
     const manaCollection = computed(() =>
       Object.values(ManaType).map((mana) => ({
         mana,
         selected: props.player.mana === mana,
-        styles: manaToCustomProperties(mana, manaPops),
+        styles: manaToCustomProperties(mana),
       }))
     )
 
