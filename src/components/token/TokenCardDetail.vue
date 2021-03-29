@@ -36,10 +36,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    console.log(props.token)
-
     const manaStyles = computed(() => manaToCustomProperties(props.token.mana[0]))
-    console.log(manaStyles)
 
     return { manaStyles }
   },
