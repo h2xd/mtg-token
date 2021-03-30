@@ -3,7 +3,8 @@ import { createLifeStore } from "./lifeStore"
 import { createBoardStore } from "./boardStore"
 import { ManaType } from "../@types/mana"
 
-export const createPlayerStore = (id: number): ReturnType<typeof defineStore> =>
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const createPlayerStore = (id: number) =>
   defineStore({
     id: `player-${id}`,
     state: () => ({
