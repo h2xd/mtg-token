@@ -1,6 +1,6 @@
 <template>
   <div class="container" :style="styles">
-    <div class="counter" @click="popupStore.open()">{{ player.life.remainingLife }}</div>
+    <div class="counter" @click="popupStore.open(popupId)">{{ player.life.remainingLife }}</div>
 
     <button @click="player.life.raise(1)" class="button raise">
       <PlusIcon />
@@ -10,7 +10,7 @@
     </button>
   </div>
 
-  <Popup>
+  <Popup v-if="isPopupSelected">
     <button
       v-for="item in manaCollection"
       :key="item.mana"
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from "vue"
+import { defineComponent, PropType, computed, ref } from "vue"
 import { createPlayerStore } from "../stores/playerStore"
 
 import { ManaType } from "../@types/mana"
@@ -69,13 +69,15 @@ export default defineComponent({
     )
 
     const popupStore = usePopupStore()
+    const popupId = ref(popupStore.generateId())
+    const isPopupSelected = computed(() => popupStore.selectedId === popupId.value)
 
     const handleLayoutChange = (layout: AppLayout) => {
       appStore.setLayout(layout)
       popupStore.close()
     }
 
-    return { styles, appStore, popupStore, manaCollection, handleLayoutChange }
+    return { styles, appStore, popupStore, popupId, isPopupSelected, manaCollection, handleLayoutChange }
   },
 })
 </script>
