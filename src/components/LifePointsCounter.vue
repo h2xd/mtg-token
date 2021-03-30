@@ -91,8 +91,10 @@ export default defineComponent({
   background-color: var(--mana-background);
   color: var(--mana-text);
   text-align: center;
-  width: 100%;
-  height: 100vw;
+  width: calc(100% - var(--space-l) * 2);
+  height: calc(100vw - var(--space-l) * 2);
+  margin: var(--space-l);
+  border-radius: var(--border-radius);
 }
 
 .manaButton {
