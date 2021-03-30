@@ -11,7 +11,7 @@ import { defineComponent } from "vue"
 
 import { useAppStore } from "./stores/appStore"
 
-import { hydratePlayerStore } from "./utils/hydratePlayerStore"
+import { hydrateAppStore } from "./utils/hydrateAppStore"
 import { usePopupStore } from "./stores/popupStore"
 
 export default defineComponent({
@@ -19,11 +19,9 @@ export default defineComponent({
   components: {},
   setup() {
     const appStore = useAppStore()
-    const player1 = appStore.players[0]
-
-    hydratePlayerStore(player1)
-
     const popupStore = usePopupStore()
+
+    hydrateAppStore()
 
     return { appStore, popupStore }
   },

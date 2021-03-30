@@ -22,11 +22,12 @@ const AppLayouts: AppLayout[] = [
   },
 ]
 
+const COUNT_OPTIONS = [1, 2, 3, 4, 5, 6]
+
 export const useAppStore = defineStore({
   id: "app",
   state: () => ({
     players: createPlayerStores(6),
-    countOptions: [1, 2, 3, 4, 5, 6],
     layout: AppLayouts[0],
   }),
   getters: {
@@ -39,7 +40,7 @@ export const useAppStore = defineStore({
   },
   actions: {
     setPlayerCount(countOption: number) {
-      if (!this.countOptions.includes(countOption)) {
+      if (!COUNT_OPTIONS.includes(countOption)) {
         return
       }
 
@@ -47,6 +48,13 @@ export const useAppStore = defineStore({
     },
     setLayout(layout: AppLayout) {
       this.layout = layout
+    },
+    setLayoutByName(name: AppLayout["name"]) {
+      const foundLayout = AppLayouts.find((layout) => layout.name === name)
+
+      if (foundLayout) {
+        this.layout = foundLayout
+      }
     },
     reset() {
       this.players.forEach((player) => player.reset())
