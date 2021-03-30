@@ -1,5 +1,6 @@
 <template>
   <LifePointsCounter :player="player1" />
+
   <Board :board="player1.board" />
 
   <Button @click="handleAttackAll">Attack with all</Button>

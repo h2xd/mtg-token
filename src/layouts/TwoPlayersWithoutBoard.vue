@@ -1,5 +1,7 @@
 <template>
-  <LifePointsCounter :player="player1" />
+  <div :class="$style.flip">
+    <LifePointsCounter :player="player1" />
+  </div>
   <LifePointsCounter :player="player2" />
 </template>
 
@@ -26,4 +28,8 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style module>
+.flip {
+  transform: rotate(180deg);
+}
+</style>

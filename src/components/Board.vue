@@ -17,7 +17,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue"
 
-import { useBoardStore } from "../stores/boardStore"
+import { createBoardStore } from "../stores/boardStore"
 import { TokenCreature } from "../entities/TokenCreature"
 
 import TokenCardDetail from "../components/token/TokenCardDetail.vue"
@@ -28,7 +28,7 @@ export default defineComponent({
     TokenCardDetail,
   },
   props: {
-    board: Object as PropType<ReturnType<typeof useBoardStore>>,
+    board: Object as PropType<ReturnType<ReturnType<typeof createBoardStore>>>,
   },
   setup: (props) => {
     const handleDeath = (token: TokenCreature) => props.board.removeToken(token)
