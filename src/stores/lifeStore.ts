@@ -7,11 +7,19 @@ export const createLifeStore = (id: number) =>
   defineStore({
     id: `life-${id}`,
     state: () => ({
+      commitValue: 0,
       remainingLife: DEFAULT_LIFEPOINTS,
+      timeoutHook: 0,
     }),
     getters: {
       alive() {
         return this.remainingLife > 0
+      },
+      hasCommitValue() {
+        return this.commitValue > 0 || this.commitValue < 0
+      },
+      decoratedCommitValue() {
+        return this.commitValue > 0 ? `+${this.commitValue}` : this.commitValue
       },
     },
     actions: {
@@ -19,10 +27,22 @@ export const createLifeStore = (id: number) =>
         this.remainingLife = DEFAULT_LIFEPOINTS
       },
       raise(amount = 1) {
-        this.remainingLife += Math.abs(amount)
+        this.commitValue += Math.abs(amount)
+        this.setTimeoutHandler()
       },
       reduce(amount = 1) {
-        this.remainingLife -= Math.abs(amount)
+        this.commitValue -= Math.abs(amount)
+        this.setTimeoutHandler()
+      },
+      setTimeoutHandler() {
+        window.clearTimeout(this.timeoutHook)
+        this.timeoutHook = window.setTimeout(() => {
+          this.commit()
+        }, 600)
+      },
+      commit() {
+        this.remainingLife += this.commitValue
+        this.commitValue = 0
 
         if (this.remainingLife < 0) {
           this.remainingLife = 0

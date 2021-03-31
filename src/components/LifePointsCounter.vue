@@ -1,11 +1,14 @@
 <template>
-  <div class="container" :style="styles">
-    <div class="counter" @click="popupStore.open(popupId)">{{ player.life.remainingLife }}</div>
+  <div :class="$style.container" :style="styles">
+    <transition name="bounce">
+      <div v-if="player.life.hasCommitValue" :class="$style.commitValue">{{ player.life.decoratedCommitValue }}</div>
+    </transition>
+    <div :class="$style.counter" @click="popupStore.open(popupId)">{{ player.life.remainingLife }}</div>
 
-    <button @click="player.life.raise(1)" class="button raise">
+    <button @click="player.life.raise(1)" :class="[$style.button, $style.raise]">
       <PlusIcon />
     </button>
-    <button @click="player.life.reduce(1)" class="button reduce">
+    <button @click="player.life.reduce(1)" :class="[$style.button, $style.reduce]">
       <MinusIcon />
     </button>
   </div>
@@ -14,7 +17,7 @@
     <button
       v-for="item in manaCollection"
       :key="item.mana"
-      :class="['manaButton', item.selected && 'selected']"
+      :class="[$style.manaButton, item.selected && $style.selected]"
       :style="item.styles"
       @click="player.setManaType(item.mana)"
     ></button>
@@ -59,11 +62,11 @@ export default defineComponent({
   setup(props) {
     const appStore = useAppStore()
 
-    const styles = computed(() => manaToCustomProperties(props.player.mana))
+    const styles = computed(() => manaToCustomProperties(props.player?.mana))
     const manaCollection = computed(() =>
       Object.values(ManaType).map((mana) => ({
         mana,
-        selected: props.player.mana === mana,
+        selected: props.player?.mana === mana,
         styles: manaToCustomProperties(mana),
       }))
     )
@@ -82,7 +85,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style module>
 .container {
   display: flex;
   justify-content: center;
@@ -114,6 +117,14 @@ export default defineComponent({
 
 .counter {
   font-size: 50vw;
+}
+
+.commitValue {
+  font-size: 7vw;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .button {
