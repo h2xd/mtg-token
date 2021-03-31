@@ -118,9 +118,9 @@ export default defineComponent({
 
 .button {
   position: absolute;
-  left: 0;
-  width: 100%;
-  height: 25%;
+  top: 0;
+  width: 25%;
+  height: 100%;
 
   background-color: transparent;
   border: 0;
@@ -140,7 +140,7 @@ export default defineComponent({
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
 }
 
 .button:active svg {
@@ -149,7 +149,7 @@ export default defineComponent({
 }
 
 .raise {
-  top: 0;
+  left: 0;
 }
 
 .raise::before {
@@ -157,6 +157,6 @@ export default defineComponent({
 }
 
 .reduce {
-  bottom: 0;
+  right: 0;
 }
 </style>
