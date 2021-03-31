@@ -15,7 +15,7 @@ export const DEFAULT_PROPERTY_NAMES = {
 
 type Options = typeof DEFAULT_PROPERTY_NAMES
 
-export function manaToCustomProperties(mana: ManaType, options: Partial<Options>): Record<string, string> {
+export function manaToCustomProperties(mana: ManaType, options?: Partial<Options>): Record<string, string> {
   const { backgroundKey, textKey } = {
     ...DEFAULT_PROPERTY_NAMES,
     ...options,

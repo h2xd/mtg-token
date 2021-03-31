@@ -1,11 +1,24 @@
 <template>
-  <div class="container" :style="styles">
-    <div class="counter" @click="popupStore.open(popupId)">{{ player.life.remainingLife }}</div>
+  <div :class="$style.container" :style="styles">
+    <transition name="bounce">
+      <div v-if="player.life.hasCommitValue" :class="$style.commitValue">{{ player.life.decoratedCommitValue }}</div>
+    </transition>
+    <div :class="$style.counter" @click="popupStore.open(popupId)">
+      <AnimatedInteger :number="player.life.remainingLife" />
+    </div>
 
-    <button @click="player.life.raise(1)" class="button raise">
+    <button
+      @mousedown="createMouseDownHandler(() => player.life.raise(1))"
+      @mouseup="clearMouseDownHandler"
+      :class="[$style.button, $style.raise]"
+    >
       <PlusIcon />
     </button>
-    <button @click="player.life.reduce(1)" class="button reduce">
+    <button
+      @mousedown="createMouseDownHandler(() => player.life.reduce(1))"
+      @mouseup="clearMouseDownHandler"
+      :class="[$style.button, $style.reduce]"
+    >
       <MinusIcon />
     </button>
   </div>
@@ -14,7 +27,7 @@
     <button
       v-for="item in manaCollection"
       :key="item.mana"
-      :class="['manaButton', item.selected && 'selected']"
+      :class="[$style.manaButton, item.selected && $style.selected]"
       :style="item.styles"
       @click="player.setManaType(item.mana)"
     ></button>
@@ -40,6 +53,7 @@ import { manaToCustomProperties } from "../utils/manaToCustomProperties"
 import { usePopupStore } from "../stores/popupStore"
 import { AppLayout, useAppStore } from "../stores/appStore"
 
+import AnimatedInteger from "./utils/AnimatedInteger"
 import Button from "./base/Button.vue"
 import Popup from "./Popup.vue"
 import PlusIcon from "../assets/svg/plus.svg"
@@ -48,6 +62,7 @@ import MinusIcon from "../assets/svg/minus.svg"
 export default defineComponent({
   name: "LifePointsCounter",
   components: {
+    AnimatedInteger,
     Button,
     PlusIcon,
     MinusIcon,
@@ -59,11 +74,11 @@ export default defineComponent({
   setup(props) {
     const appStore = useAppStore()
 
-    const styles = computed(() => manaToCustomProperties(props.player.mana))
+    const styles = computed(() => manaToCustomProperties(props.player?.mana))
     const manaCollection = computed(() =>
       Object.values(ManaType).map((mana) => ({
         mana,
-        selected: props.player.mana === mana,
+        selected: props.player?.mana === mana,
         styles: manaToCustomProperties(mana),
       }))
     )
@@ -77,12 +92,33 @@ export default defineComponent({
       popupStore.close()
     }
 
-    return { styles, appStore, popupStore, popupId, isPopupSelected, manaCollection, handleLayoutChange }
+    const intervalTarget = ref(0)
+
+    const createMouseDownHandler = (callback: () => void) => {
+      callback()
+      intervalTarget.value = window.setInterval(callback, 175)
+    }
+
+    const clearMouseDownHandler = () => {
+      window.clearInterval(intervalTarget.value)
+    }
+
+    return {
+      styles,
+      appStore,
+      popupStore,
+      popupId,
+      isPopupSelected,
+      manaCollection,
+      handleLayoutChange,
+      createMouseDownHandler,
+      clearMouseDownHandler,
+    }
   },
 })
 </script>
 
-<style scoped>
+<style module>
 .container {
   display: flex;
   justify-content: center;
@@ -116,11 +152,19 @@ export default defineComponent({
   font-size: 50vw;
 }
 
+.commitValue {
+  font-size: 7vw;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .button {
   position: absolute;
-  left: 0;
-  width: 100%;
-  height: 25%;
+  top: 0;
+  width: 25%;
+  height: 100%;
 
   background-color: transparent;
   border: 0;
@@ -140,7 +184,7 @@ export default defineComponent({
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
 }
 
 .button:active svg {
@@ -149,7 +193,7 @@ export default defineComponent({
 }
 
 .raise {
-  top: 0;
+  left: 0;
 }
 
 .raise::before {
@@ -157,6 +201,6 @@ export default defineComponent({
 }
 
 .reduce {
-  bottom: 0;
+  right: 0;
 }
 </style>
