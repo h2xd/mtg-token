@@ -8,15 +8,15 @@
     </div>
 
     <button
-      @mousedown="createMouseDownHandler(() => player.life.raise(1))"
-      @mouseup="clearMouseDownHandler"
+      @pointerdown="createPointerDownHandler(() => player.life.raise(1))"
+      @pointerup="clearPointerDownHandler"
       :class="[$style.button, $style.raise]"
     >
       <PlusIcon />
     </button>
     <button
-      @mousedown="createMouseDownHandler(() => player.life.reduce(1))"
-      @mouseup="clearMouseDownHandler"
+      @pointerdown="createPointerDownHandler(() => player.life.reduce(1))"
+      @pointerup="clearPointerDownHandler"
       :class="[$style.button, $style.reduce]"
     >
       <MinusIcon />
@@ -94,12 +94,12 @@ export default defineComponent({
 
     const intervalTarget = ref(0)
 
-    const createMouseDownHandler = (callback: () => void) => {
+    const createPointerDownHandler = (callback: () => void) => {
       callback()
       intervalTarget.value = window.setInterval(callback, 175)
     }
 
-    const clearMouseDownHandler = () => {
+    const clearPointerDownHandler = () => {
       window.clearInterval(intervalTarget.value)
     }
 
@@ -111,8 +111,8 @@ export default defineComponent({
       isPopupSelected,
       manaCollection,
       handleLayoutChange,
-      createMouseDownHandler,
-      clearMouseDownHandler,
+      createPointerDownHandler,
+      clearPointerDownHandler,
     }
   },
 })
