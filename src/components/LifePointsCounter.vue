@@ -3,12 +3,22 @@
     <transition name="bounce">
       <div v-if="player.life.hasCommitValue" :class="$style.commitValue">{{ player.life.decoratedCommitValue }}</div>
     </transition>
-    <div :class="$style.counter" @click="popupStore.open(popupId)">{{ player.life.remainingLife }}</div>
+    <div :class="$style.counter" @click="popupStore.open(popupId)">
+      <AnimatedInteger :number="player.life.remainingLife" />
+    </div>
 
-    <button @click="player.life.raise(1)" :class="[$style.button, $style.raise]">
+    <button
+      @mousedown="createMouseDownHandler(() => player.life.raise(1))"
+      @mouseup="clearMouseDownHandler"
+      :class="[$style.button, $style.raise]"
+    >
       <PlusIcon />
     </button>
-    <button @click="player.life.reduce(1)" :class="[$style.button, $style.reduce]">
+    <button
+      @mousedown="createMouseDownHandler(() => player.life.reduce(1))"
+      @mouseup="clearMouseDownHandler"
+      :class="[$style.button, $style.reduce]"
+    >
       <MinusIcon />
     </button>
   </div>
@@ -43,6 +53,7 @@ import { manaToCustomProperties } from "../utils/manaToCustomProperties"
 import { usePopupStore } from "../stores/popupStore"
 import { AppLayout, useAppStore } from "../stores/appStore"
 
+import AnimatedInteger from "./utils/AnimatedInteger"
 import Button from "./base/Button.vue"
 import Popup from "./Popup.vue"
 import PlusIcon from "../assets/svg/plus.svg"
@@ -51,6 +62,7 @@ import MinusIcon from "../assets/svg/minus.svg"
 export default defineComponent({
   name: "LifePointsCounter",
   components: {
+    AnimatedInteger,
     Button,
     PlusIcon,
     MinusIcon,
@@ -80,7 +92,28 @@ export default defineComponent({
       popupStore.close()
     }
 
-    return { styles, appStore, popupStore, popupId, isPopupSelected, manaCollection, handleLayoutChange }
+    const intervalTarget = ref(0)
+
+    const createMouseDownHandler = (callback: () => void) => {
+      callback()
+      intervalTarget.value = window.setInterval(callback, 175)
+    }
+
+    const clearMouseDownHandler = () => {
+      window.clearInterval(intervalTarget.value)
+    }
+
+    return {
+      styles,
+      appStore,
+      popupStore,
+      popupId,
+      isPopupSelected,
+      manaCollection,
+      handleLayoutChange,
+      createMouseDownHandler,
+      clearMouseDownHandler,
+    }
   },
 })
 </script>
