@@ -10,6 +10,7 @@
     <button
       @pointerdown="createPointerDownHandler(() => player.life.reduce(1))"
       @pointerup="clearPointerDownHandler"
+      @lostpointercapture="clearPointerDownHandler"
       :class="[$style.button, $style.reduce]"
     >
       <MinusIcon />
@@ -17,6 +18,7 @@
     <button
       @pointerdown="createPointerDownHandler(() => player.life.raise(1))"
       @pointerup="clearPointerDownHandler"
+      @lostpointercapture="clearPointerDownHandler"
       :class="[$style.button, $style.raise]"
     >
       <PlusIcon />
