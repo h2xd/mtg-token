@@ -1,5 +1,7 @@
 <template>
-  <LifePointsCounter :player="player1" />
+  <LifePoints :player="player1" />
+
+  <SettingsBar />
 
   <Board :board="player1.board" />
 
@@ -19,7 +21,8 @@ import { TokenCreature } from "../entities/TokenCreature"
 import Board from "../components/Board.vue"
 import Button from "../components/base/Button.vue"
 import Library from "../components/Library.vue"
-import LifePointsCounter from "../components/LifePointsCounter.vue"
+import LifePoints from "../components/LifePoints.vue"
+import SettingsBar from "../components/base/SettingsBar.vue"
 
 export default defineComponent({
   name: "OnePlayerWithBoard",
@@ -27,7 +30,8 @@ export default defineComponent({
     Board,
     Button,
     Library,
-    LifePointsCounter,
+    LifePoints,
+    SettingsBar,
   },
   setup() {
     const appStore = useAppStore()

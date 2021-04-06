@@ -40,8 +40,7 @@ export default defineComponent({
   position: fixed;
   top: 50%;
   left: 50%;
-  width: min(60vw, calc(100% - var(--space-l) * 2));
-  height: min(60vw, calc(100% - var(--space-l) * 2));
+  width: max(60vw, 100%);
   z-index: 50;
   background-color: var(--color-background);
   box-shadow: var(--box-shadow-overlay);

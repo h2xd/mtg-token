@@ -32,7 +32,7 @@ export default defineComponent({
 :root {
   /* Main-Colors */
   --color-accent: #6014d7;
-  --color-background: #08010e;
+  --color-background: #040209;
   --color-shadow: #010002;
   --color-text: #ffffff;
 
