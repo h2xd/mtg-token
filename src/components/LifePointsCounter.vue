@@ -8,18 +8,18 @@
     </div>
 
     <button
-      @pointerdown="createPointerDownHandler(() => player.life.raise(1))"
-      @pointerup="clearPointerDownHandler"
-      :class="[$style.button, $style.raise]"
-    >
-      <PlusIcon />
-    </button>
-    <button
       @pointerdown="createPointerDownHandler(() => player.life.reduce(1))"
       @pointerup="clearPointerDownHandler"
       :class="[$style.button, $style.reduce]"
     >
       <MinusIcon />
+    </button>
+    <button
+      @pointerdown="createPointerDownHandler(() => player.life.raise(1))"
+      @pointerup="clearPointerDownHandler"
+      :class="[$style.button, $style.raise]"
+    >
+      <PlusIcon />
     </button>
   </div>
 
@@ -192,15 +192,15 @@ export default defineComponent({
   transform: scale(0.7);
 }
 
-.raise {
+.reduce {
   left: 0;
 }
 
-.raise::before {
+.reduce::before {
   transform: rotate(180deg);
 }
 
-.reduce {
+.raise {
   right: 0;
 }
 </style>
