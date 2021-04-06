@@ -1,8 +1,9 @@
 <template>
   <div :class="$style.flip">
-    <LifePointsCounter :player="player1" />
+    <LifePoints :player="player1" />
   </div>
-  <LifePointsCounter :player="player2" />
+  <SettingsBar />
+  <LifePoints :player="player2" />
 </template>
 
 <script lang="ts">
@@ -10,12 +11,14 @@ import { defineComponent } from "vue"
 
 import { useAppStore } from "../stores/appStore"
 
-import LifePointsCounter from "../components/LifePointsCounter.vue"
+import LifePoints from "../components/LifePoints.vue"
+import SettingsBar from "../components/base/SettingsBar.vue"
 
 export default defineComponent({
   name: "TwoPlayersWithoutBoard",
   components: {
-    LifePointsCounter,
+    LifePoints,
+    SettingsBar,
   },
   setup() {
     const appStore = useAppStore()

@@ -1,8 +1,21 @@
 <template>
-  <button :class="$style.button">
+  <button :class="[$style.button, clean && $style.clean]">
     <slot />
   </button>
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
+  props: {
+    clean: {
+      type: Boolean,
+      default: false,
+    },
+  },
+})
+</script>
 
 <style module>
 .button {
@@ -15,6 +28,12 @@
   cursor: pointer;
   outline: 0;
   transition: var(--transition);
+}
+
+.clean {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
 }
 
 .button:hover {

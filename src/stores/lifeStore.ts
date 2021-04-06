@@ -15,12 +15,6 @@ export const createLifeStore = (id: number) =>
       alive() {
         return this.remainingLife > 0
       },
-      hasCommitValue() {
-        return this.commitValue > 0 || this.commitValue < 0
-      },
-      decoratedCommitValue() {
-        return this.commitValue > 0 ? `+${this.commitValue}` : this.commitValue
-      },
     },
     actions: {
       reset() {
